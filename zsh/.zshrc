@@ -1,31 +1,29 @@
 ############################
 # Antigen config
 ############################
-source $HOME/.antigen/antigen.zsh
+source $HOME/.zplug/init.zsh
 
-# Load the oh-my-zsh's library
-antigen use oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting" 
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "MichaelAquilina/zsh-you-should-use"
 
-# Bundles from the default repo (robbyrussell's oh-my-zsh)
-antigen bundle git
-
-# Syntax highlighting bundle.
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Fish-like auto suggestions
-antigen bundle zsh-users/zsh-autosuggestions
-    
-# Extra zsh completions
-antigen bundle zsh-users/zsh-completions
-
-# You Should Use
-antigen bundle "MichaelAquilina/zsh-you-should-use"
 
 # Load the theme
-antigen theme eastwood
+zplug "themes/eastwood", as:theme, from:oh-my-zsh
 
-# Tell antigen that you're done
-antigen apply
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check --verbose; then
+	printf "Install? [y/N]: "
+	if read -q; then
+		echo; zplug install
+	fi
+fi
+
+# Then, source plugins and add commands to $PATH
+zplug load # --verbose
 
 ############################
 # My Config 
